@@ -7,14 +7,26 @@ import AuthContext from '../context/AuthContext';
 const VoterDashboard = () => {
     const { user } = useContext(AuthContext);
     const [elections, setElections] = useState([]);
+    const [votedElections, setVotedElections] = useState([]); // Track IDs of voted elections
     const [msg, setMsg] = useState('');
     const navigate = useNavigate(); // Hook for navigation
 
     useEffect(() => {
         if (user) {
             fetchElections();
+            fetchVotingHistory();
         }
     }, [user]);
+
+    const fetchVotingHistory = async () => {
+        try {
+            const config = { headers: { Authorization: `Bearer ${user.token}` } };
+            const { data } = await axios.get('http://localhost:5000/api/elections/history', config);
+            setVotedElections(data);
+        } catch (error) {
+            console.error("Error fetching voting history", error);
+        }
+    };
 
     const fetchElections = async () => {
         try {
@@ -51,6 +63,7 @@ const VoterDashboard = () => {
 
             setMsg('Vote Cast Successfully!');
             alert('Vote Cast Successfully! Redirecting to results...');
+            fetchVotingHistory(); // Refresh history to update UI
             navigate(`/election/${electionId}`); // Redirect to Live Result
         } catch (error) {
             const errorMsg = error.response?.data?.message || 'Voting Failed';
@@ -121,9 +134,13 @@ const VoterDashboard = () => {
                                                 </div>
                                                 <button
                                                     onClick={() => handleVote(election._id, candidate._id)}
-                                                    className="bg-brand-green text-white px-3 py-1 rounded text-sm hover:bg-green-700 transition"
+                                                    disabled={votedElections.includes(election._id)}
+                                                    className={`px-3 py-1 rounded text-sm transition ${votedElections.includes(election._id)
+                                                            ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
+                                                            : 'bg-brand-green text-white hover:bg-green-700'
+                                                        }`}
                                                 >
-                                                    Vote
+                                                    {votedElections.includes(election._id) ? 'Voted' : 'Vote'}
                                                 </button>
                                             </div>
                                         ))}
