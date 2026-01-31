@@ -3,6 +3,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
 import LiveResult from './pages/LiveResult';
+import AdminDashboard from './pages/AdminDashboard';
 import VoterDashboard from './pages/VoterDashboard';
 
 function App() {

@@ -61,6 +61,31 @@ const VoterDashboard = () => {
 
     if (!user) return <div className="text-center mt-20">Loading...</div>;
 
+    if (!user.constituency) {
+        return (
+            <div className="min-h-screen bg-gray-50">
+                <Navbar />
+                <div className="container mx-auto p-6">
+                    <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-6 rounded shadow-md max-w-2xl mx-auto mt-10" role="alert">
+                        <h2 className="font-bold text-xl mb-2">Profile Update Required</h2>
+                        <p className="mb-4">
+                            Your constituency information is missing from your session. This is likely because your account was updated.
+                        </p>
+                        <p className="mb-6 font-semibold">
+                            Please Log Out and Log In again to refresh your account details.
+                        </p>
+                        <button
+                            onClick={() => { localStorage.removeItem('userInfo'); window.location.href = '/login'; }}
+                            className="bg-yellow-600 text-white px-6 py-2 rounded hover:bg-yellow-700 transition"
+                        >
+                            Log Out Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="min-h-screen bg-gray-50">
             <Navbar />
@@ -75,7 +100,9 @@ const VoterDashboard = () => {
 
                     {elections.length === 0 ? (
                         <div className="text-center py-10 text-gray-500">
-                            No active elections found for your constituency.
+                            No active elections found for your constituency ({user.constituency}).
+                            <br />
+                            <span className="text-sm mt-2 block">(Elections must be set to "Ongoing" by Admin)</span>
                         </div>
                     ) : (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -102,6 +102,18 @@ const AdminDashboard = () => {
         )
     }
 
+    const updateStatus = async (id, phase) => {
+        try {
+            const config = { headers: { Authorization: `Bearer ${user.token}` } };
+            await axios.put(`http://localhost:5000/api/elections/${id}/status`, { phase }, config);
+            fetchElections();
+            alert(`Election ${phase} successfully`);
+        } catch (error) {
+            console.error(error);
+            alert('Failed to update status');
+        }
+    };
+
     return (
         <div className="min-h-screen bg-gray-50">
             <Navbar />
@@ -190,6 +202,15 @@ const AdminDashboard = () => {
                                         <p><strong>Candidates:</strong> {election.candidates.length}</p>
                                         <p><strong>Start:</strong> {new Date(election.startTime).toLocaleString()}</p>
                                         <p><strong>End:</strong> {new Date(election.endTime).toLocaleString()}</p>
+                                    </div>
+                                    <div className="mt-4 flex gap-2">
+                                        {election.phase === 'scheduled' && (
+                                            <button onClick={() => updateStatus(election._id, 'ongoing')} className="bg-brand-green text-white px-3 py-1 rounded text-sm hover:bg-green-700">Start Election</button>
+                                        )}
+                                        {election.phase === 'ongoing' && (
+                                            <button onClick={() => updateStatus(election._id, 'ended')} className="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-700">End Election</button>
+                                        )}
+                                        <button className="bg-blue-500 text-white px-3 py-1 rounded text-sm hover:bg-blue-600">Edit</button>
                                     </div>
                                 </div>
                             ))}
