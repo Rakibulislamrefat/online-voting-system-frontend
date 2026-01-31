@@ -13,7 +13,7 @@ const AdminDashboard = () => {
     const [constituencies, setConstituencies] = useState('');
     const [startTime, setStartTime] = useState('');
     const [endTime, setEndTime] = useState('');
-    const [candidates, setCandidates] = useState([{ name: '', symbol: '' }]);
+    const [candidates, setCandidates] = useState([{ name: '', symbol: '', symbolImage: '' }]);
     const [msg, setMsg] = useState('');
 
     // Data State
@@ -67,7 +67,7 @@ const AdminDashboard = () => {
     };
 
     const addCandidate = () => {
-        setCandidates([...candidates, { name: '', symbol: '' }]);
+        setCandidates([...candidates, { name: '', symbol: '', symbolImage: '' }]);
     };
 
     const removeCandidate = (index) => {
@@ -251,10 +251,15 @@ const AdminDashboard = () => {
                                         <div className="bg-gray-50 p-6 rounded-xl border border-gray-200">
                                             <label className="block text-gray-700 font-bold mb-4 text-sm uppercase tracking-wider">Registered Candidates</label>
                                             {candidates.map((candidate, index) => (
-                                                <div key={index} className="flex gap-4 mb-3">
-                                                    <input type="text" placeholder="Candidate Name" className="flex-1 p-3 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 shadow-sm" value={candidate.name} onChange={(e) => handleCandidateChange(index, 'name', e.target.value)} required />
-                                                    <input type="text" placeholder="Symbol (Optional)" className="flex-1 p-3 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 shadow-sm" value={candidate.symbol} onChange={(e) => handleCandidateChange(index, 'symbol', e.target.value)} />
-                                                    {candidates.length > 1 && <button type="button" onClick={() => removeCandidate(index)} className="bg-red-100 text-red-500 w-12 h-12 rounded-lg hover:bg-red-200 transition font-bold">✕</button>}
+                                                <div key={index} className="mb-4 bg-white p-4 rounded-lg border shadow-sm">
+                                                    <div className="flex gap-4 mb-2">
+                                                        <input type="text" placeholder="Candidate Name" className="flex-1 p-3 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 shadow-sm" value={candidate.name} onChange={(e) => handleCandidateChange(index, 'name', e.target.value)} required />
+                                                        {candidates.length > 1 && <button type="button" onClick={() => removeCandidate(index)} className="bg-red-100 text-red-500 px-4 rounded-lg hover:bg-red-200 transition font-bold">Remove</button>}
+                                                    </div>
+                                                    <div className="flex gap-4">
+                                                        <input type="text" placeholder="Symbol Name (e.g. Boat)" className="flex-1 p-3 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 shadow-sm" value={candidate.symbol} onChange={(e) => handleCandidateChange(index, 'symbol', e.target.value)} />
+                                                        <input type="text" placeholder="Symbol Image URL (https://...)" className="flex-1 p-3 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 shadow-sm" value={candidate.symbolImage} onChange={(e) => handleCandidateChange(index, 'symbolImage', e.target.value)} />
+                                                    </div>
                                                 </div>
                                             ))}
                                             <button type="button" onClick={addCandidate} className="mt-2 text-indigo-600 font-bold flex items-center gap-2 hover:bg-indigo-50 px-4 py-2 rounded-lg transition">+ Add Another Candidate</button>

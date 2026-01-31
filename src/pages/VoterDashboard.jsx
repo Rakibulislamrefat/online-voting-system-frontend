@@ -190,40 +190,57 @@ const VoterDashboard = () => {
                                             <p className="font-semibold text-gray-700 text-sm uppercase tracking-wider mb-3">Candidates</p>
                                             {election.candidates.map(candidate => (
                                                 <div key={candidate._id} className={`flex justify-between items-center p-3 rounded-lg border transition ${hasVoted ? 'bg-gray-50 opacity-70' : 'bg-white hover:border-green-400'}`}>
-                                                    <div className="flex items-center gap-3">
-                                                        <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold shadow-sm ${hasVoted ? 'bg-gray-200 text-gray-500' : 'bg-gray-100 text-gray-700'}`}>
-                                                            {candidate.symbol ? candidate.symbol[0] : candidate.name[0]}
+                                                    <div className="flex items-center gap-4">
+                                                        <div className="flex items-center gap-4">
+                                                            {/* Candidate Avatar/Initial */}
+                                                            <div className={`w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold shadow-sm border ${hasVoted ? 'bg-gray-200 text-gray-500' : 'bg-white text-gray-700'}`}>
+                                                                {candidate.name[0]}
+                                                            </div>
+
+                                                            {/* Symbol Image */}
+                                                            {candidate.symbolImage && (
+                                                                <div className="w-14 h-14 rounded-lg bg-gray-50 border p-1 flex items-center justify-center shadow-sm">
+                                                                    <img src={candidate.symbolImage} alt={candidate.symbol} className="max-w-full max-h-full object-contain" />
+                                                                </div>
+                                                            )}
+                                                            <div>
+                                                                <div className="font-bold text-gray-800 text-lg">{candidate.name}</div>
+                                                                {candidate.symbol && (
+                                                                    <div className="text-sm text-gray-500 flex items-center gap-1 mt-0.5">
+                                                                        <span className="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded border">Symbol: {candidate.symbol}</span>
+                                                                    </div>
+                                                                )}
+                                                            </div>
                                                         </div>
-                                                        <span className="font-medium text-gray-800">{candidate.name}</span>
-                                                    </div>
-                                                    <button
-                                                        onClick={() => !hasVoted && handleVote(election._id, candidate._id)}
-                                                        disabled={hasVoted}
-                                                        className={`px-4 py-2 rounded-lg text-sm font-medium transition shadow-sm ${hasVoted
+                                                        <button
+                                                            onClick={() => !hasVoted && handleVote(election._id, candidate._id)}
+                                                            disabled={hasVoted}
+                                                            className={`px-4 py-2 rounded-lg text-sm font-medium transition shadow-sm ${hasVoted
                                                                 ? 'bg-gray-200 text-gray-500 cursor-not-allowed hidden'
                                                                 : 'bg-gradient-to-r from-green-600 to-green-500 text-white hover:shadow-md transform hover:-translate-y-0.5'
-                                                            }`}
-                                                    >
-                                                        Vote
-                                                    </button>
-                                                    {hasVoted && <span className="text-green-600 font-bold text-sm">✓</span>}
-                                                </div>
+                                                                }`}
+                                                        >
+                                                            Vote
+                                                        </button>
+                                                        {hasVoted && <span className="text-green-600 font-bold text-sm">✓</span>}
+                                                    </div>
                                             ))}
+                                                </div>
+                                    </div>
+                                        <div className="bg-gray-50 p-4 border-t text-center">
+                                            <button onClick={() => navigate(`/election/${election._id}`)} className="text-brand-green font-bold text-sm hover:underline flex items-center justify-center gap-2 mx-auto">
+                                                <span>📊</span> View Live Analytics
+                                            </button>
                                         </div>
                                     </div>
-                                    <div className="bg-gray-50 p-4 border-t text-center">
-                                        <button onClick={() => navigate(`/election/${election._id}`)} className="text-brand-green font-bold text-sm hover:underline flex items-center justify-center gap-2 mx-auto">
-                                            <span>📊</span> View Live Analytics
-                                        </button>
-                                    </div>
+                                    )
+                        })}
                                 </div>
                             )
-                        })}
-                    </div>
-                )}
+                        }
             </div>
         </div>
-    );
+            );
 };
 
-export default VoterDashboard;
+            export default VoterDashboard;
