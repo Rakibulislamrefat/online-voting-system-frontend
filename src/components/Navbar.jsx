@@ -15,7 +15,11 @@ const Navbar = () => {
         <nav className="bg-brand-green p-4 text-white shadow-lg">
             <div className="container mx-auto flex justify-between items-center">
                 <Link to="/" className="text-2xl font-bold flex items-center gap-2">
-                    <div className="w-4 h-4 rounded-full bg-brand-red"></div>
+                    {/* Bangladesh Flag Logo */}
+                    <svg title="Bangladesh Flag" className="w-10 h-6 border border-green-800 shadow-sm" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 12">
+                        <rect width="20" height="12" fill="#006a4e" />
+                        <circle cx="9" cy="6" r="4" fill="#f42a41" />
+                    </svg>
                     BD Voting
                 </Link>
 
