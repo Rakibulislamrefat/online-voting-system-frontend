@@ -1,0 +1,16 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+    content: [
+        "./index.html",
+        "./src/**/*.{js,ts,jsx,tsx}",
+    ],
+    theme: {
+        extend: {
+            colors: {
+                'brand-green': '#006a4e', // Bangladesh flag green
+                'brand-red': '#f42a41',   // Bangladesh flag red
+            }
+        },
+    },
+    plugins: [],
+}
