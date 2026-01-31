@@ -75,6 +75,8 @@ const AdminDashboard = () => {
         setCandidates(newCandidates);
     };
 
+    const [editId, setEditId] = useState(null);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -84,16 +86,40 @@ const AdminDashboard = () => {
                 }
             };
             const constituencyList = constituencies.split(',').map(c => c.trim()).filter(c => c !== '');
-            await axios.post('http://localhost:5000/api/elections', {
-                title, description, candidates, constituencies: constituencyList, startTime, endTime,
-            }, config);
-            setMsg('Election Created Successfully!');
+
+            const payload = {
+                title, description, constituencies: constituencyList, startTime, endTime
+            };
+            if (!editId) payload.candidates = candidates; // Only send candidates on create
+
+            if (editId) {
+                await axios.put(`http://localhost:5000/api/elections/${editId}`, payload, config);
+                setMsg('Election Updated Successfully!');
+                setEditId(null);
+            } else {
+                await axios.post('http://localhost:5000/api/elections', payload, config);
+                setMsg('Election Created Successfully!');
+            }
+
             setTitle(''); setDescription(''); setConstituencies(''); setStartTime(''); setEndTime('');
             setCandidates([{ name: '', symbol: '' }]);
+            fetchElections(); // Refresh list if needed (though we are on create tab)
         } catch (error) {
             console.error(error);
-            setMsg('Failed to create election');
+            setMsg('Failed to save election');
         }
+    };
+
+    const handleEdit = (election) => {
+        setEditId(election._id);
+        setTitle(election.title);
+        setDescription(election.description);
+        setConstituencies(election.constituencies ? election.constituencies.join(', ') : '');
+        setStartTime(election.startTime); // Date format might need adjustment
+        setEndTime(election.endTime);
+        setCandidates(election.candidates); // Display candidates but maybe disable editing them?
+        setActiveTab('create');
+        setMsg('');
     };
 
     if (!user || user.role !== 'admin') {
@@ -129,27 +155,32 @@ const AdminDashboard = () => {
 
                 {activeTab === 'create' && (
                     <div className="bg-white p-8 rounded-lg shadow-lg max-w-2xl mx-auto">
-                        <h2 className="text-2xl font-bold mb-6 border-b pb-2">Create New Election</h2>
+                        <h2 className="text-2xl font-bold mb-6 border-b pb-2">{editId ? 'Edit Election' : 'Create New Election'}</h2>
                         {msg && <div className={`p-3 rounded mb-4 text-center ${msg.includes('Success') ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>{msg}</div>}
                         <form onSubmit={handleSubmit}>
                             <div className="mb-4"><label className="block text-gray-700 font-bold mb-2">Title</label><input type="text" className="w-full p-2 border rounded" value={title} onChange={(e) => setTitle(e.target.value)} required /></div>
                             <div className="mb-4"><label className="block text-gray-700 font-bold mb-2">Description</label><textarea className="w-full p-2 border rounded" value={description} onChange={(e) => setDescription(e.target.value)} rows="3"></textarea></div>
                             <div className="mb-4"><label className="block text-gray-700 font-bold mb-2">Constituencies</label><input type="text" placeholder="Dhaka-1, Chittagong-2 (Empty for National)" className="w-full p-2 border rounded" value={constituencies} onChange={(e) => setConstituencies(e.target.value)} /></div>
                             <div className="grid grid-cols-2 gap-4 mb-4">
-                                <div><label className="block text-gray-700 font-bold mb-2">Start Time</label><input type="datetime-local" className="w-full p-2 border rounded" value={startTime} onChange={(e) => setStartTime(e.target.value)} required /></div>
-                                <div><label className="block text-gray-700 font-bold mb-2">End Time</label><input type="datetime-local" className="w-full p-2 border rounded" value={endTime} onChange={(e) => setEndTime(e.target.value)} required /></div>
+                                <div><label className="block text-gray-700 font-bold mb-2">Start Time</label><input type="date" className="w-full p-2 border rounded" value={startTime ? startTime.substring(0, 10) : ''} onChange={(e) => setStartTime(e.target.value)} required /></div>
+                                <div><label className="block text-gray-700 font-bold mb-2">End Time</label><input type="date" className="w-full p-2 border rounded" value={endTime ? endTime.substring(0, 10) : ''} onChange={(e) => setEndTime(e.target.value)} required /></div>
                             </div>
-                            <div className="mb-6"><label className="block text-gray-700 font-bold mb-2">Candidates</label>
-                                {candidates.map((candidate, index) => (
-                                    <div key={index} className="flex gap-2 mb-2">
-                                        <input type="text" placeholder="Name" className="flex-1 p-2 border rounded" value={candidate.name} onChange={(e) => handleCandidateChange(index, 'name', e.target.value)} required />
-                                        <input type="text" placeholder="Symbol (Optional)" className="flex-1 p-2 border rounded" value={candidate.symbol} onChange={(e) => handleCandidateChange(index, 'symbol', e.target.value)} />
-                                        {candidates.length > 1 && <button type="button" onClick={() => removeCandidate(index)} className="bg-red-500 text-white px-3 rounded">X</button>}
-                                    </div>
-                                ))}
-                                <button type="button" onClick={addCandidate} className="text-brand-green font-bold">+ Add Candidate</button>
-                            </div>
-                            <button type="submit" className="w-full bg-brand-green text-white py-3 rounded font-bold hover:bg-green-700 transition">Create Election</button>
+
+                            {!editId && (
+                                <div className="mb-6"><label className="block text-gray-700 font-bold mb-2">Candidates</label>
+                                    {candidates.map((candidate, index) => (
+                                        <div key={index} className="flex gap-2 mb-2">
+                                            <input type="text" placeholder="Name" className="flex-1 p-2 border rounded" value={candidate.name} onChange={(e) => handleCandidateChange(index, 'name', e.target.value)} required />
+                                            <input type="text" placeholder="Symbol (Optional)" className="flex-1 p-2 border rounded" value={candidate.symbol} onChange={(e) => handleCandidateChange(index, 'symbol', e.target.value)} />
+                                            {candidates.length > 1 && <button type="button" onClick={() => removeCandidate(index)} className="bg-red-500 text-white px-3 rounded">X</button>}
+                                        </div>
+                                    ))}
+                                    <button type="button" onClick={addCandidate} className="text-brand-green font-bold">+ Add Candidate</button>
+                                </div>
+                            )}
+
+                            <button type="submit" className="w-full bg-brand-green text-white py-3 rounded font-bold hover:bg-green-700 transition">{editId ? 'Update Election' : 'Create Election'}</button>
+                            {editId && <button type="button" onClick={() => { setEditId(null); setTitle(''); setDescription(''); setConstituencies(''); setCandidates([]); }} className="w-full mt-2 bg-gray-500 text-white py-2 rounded font-bold hover:bg-gray-600 transition">Cancel</button>}
                         </form>
                     </div>
                 )}
@@ -210,7 +241,7 @@ const AdminDashboard = () => {
                                         {election.phase === 'ongoing' && (
                                             <button onClick={() => updateStatus(election._id, 'ended')} className="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-700">End Election</button>
                                         )}
-                                        <button className="bg-blue-500 text-white px-3 py-1 rounded text-sm hover:bg-blue-600">Edit</button>
+                                        <button onClick={() => handleEdit(election)} className="bg-blue-500 text-white px-3 py-1 rounded text-sm hover:bg-blue-600">Edit</button>
                                     </div>
                                 </div>
                             ))}
