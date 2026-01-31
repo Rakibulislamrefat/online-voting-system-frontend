@@ -12,7 +12,7 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="bg-brand-green p-4 text-white shadow-lg">
+        <nav className="bg-gray-900 p-4 text-white shadow-lg border-b-4 border-brand-green">
             <div className="container mx-auto flex justify-between items-center">
                 <Link to="/" className="text-2xl font-bold flex items-center gap-2">
                     {/* Bangladesh Flag Logo */}
