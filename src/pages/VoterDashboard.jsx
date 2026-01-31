@@ -191,27 +191,29 @@ const VoterDashboard = () => {
                                             {election.candidates.map(candidate => (
                                                 <div key={candidate._id} className={`flex justify-between items-center p-3 rounded-lg border transition ${hasVoted ? 'bg-gray-50 opacity-70' : 'bg-white hover:border-green-400'}`}>
                                                     <div className="flex items-center gap-4">
-                                                        <div className="flex items-center gap-4">
-                                                            {/* Candidate Avatar/Initial */}
-                                                            <div className={`w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold shadow-sm border ${hasVoted ? 'bg-gray-200 text-gray-500' : 'bg-white text-gray-700'}`}>
-                                                                {candidate.name[0]}
-                                                            </div>
+                                                        {/* Candidate Avatar/Initial */}
+                                                        <div className={`w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold shadow-sm border ${hasVoted ? 'bg-gray-200 text-gray-500' : 'bg-white text-gray-700'}`}>
+                                                            {candidate.name[0]}
+                                                        </div>
 
-                                                            {/* Symbol Image */}
-                                                            {candidate.symbolImage && (
-                                                                <div className="w-14 h-14 rounded-lg bg-gray-50 border p-1 flex items-center justify-center shadow-sm">
-                                                                    <img src={candidate.symbolImage} alt={candidate.symbol} className="max-w-full max-h-full object-contain" />
+                                                        {/* Symbol Image */}
+                                                        {candidate.symbolImage && (
+                                                            <div className="w-14 h-14 rounded-lg bg-gray-50 border p-1 flex items-center justify-center shadow-sm">
+                                                                <img src={candidate.symbolImage} alt={candidate.symbol} className="max-w-full max-h-full object-contain" />
+                                                            </div>
+                                                        )}
+
+                                                        <div>
+                                                            <div className="font-bold text-gray-800 text-lg">{candidate.name}</div>
+                                                            {candidate.symbol && (
+                                                                <div className="text-sm text-gray-500 flex items-center gap-1 mt-0.5">
+                                                                    <span className="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded border">Symbol: {candidate.symbol}</span>
                                                                 </div>
                                                             )}
-                                                            <div>
-                                                                <div className="font-bold text-gray-800 text-lg">{candidate.name}</div>
-                                                                {candidate.symbol && (
-                                                                    <div className="text-sm text-gray-500 flex items-center gap-1 mt-0.5">
-                                                                        <span className="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded border">Symbol: {candidate.symbol}</span>
-                                                                    </div>
-                                                                )}
-                                                            </div>
                                                         </div>
+                                                    </div>
+
+                                                    <div className="flex items-center gap-2">
                                                         <button
                                                             onClick={() => !hasVoted && handleVote(election._id, candidate._id)}
                                                             disabled={hasVoted}
@@ -224,23 +226,24 @@ const VoterDashboard = () => {
                                                         </button>
                                                         {hasVoted && <span className="text-green-600 font-bold text-sm">✓</span>}
                                                     </div>
-                                            ))}
                                                 </div>
-                                    </div>
-                                        <div className="bg-gray-50 p-4 border-t text-center">
-                                            <button onClick={() => navigate(`/election/${election._id}`)} className="text-brand-green font-bold text-sm hover:underline flex items-center justify-center gap-2 mx-auto">
-                                                <span>📊</span> View Live Analytics
-                                            </button>
+                                            ))}
                                         </div>
                                     </div>
-                                    )
-                        })}
+                                    <div className="bg-gray-50 p-4 border-t text-center">
+                                        <button onClick={() => navigate(`/election/${election._id}`)} className="text-brand-green font-bold text-sm hover:underline flex items-center justify-center gap-2 mx-auto">
+                                            <span>📊</span> View Live Analytics
+                                        </button>
+                                    </div>
                                 </div>
                             )
-                        }
+                        })}
+                    </div>
+                )
+                }
             </div>
         </div>
-            );
+    );
 };
 
-            export default VoterDashboard;
+export default VoterDashboard;
