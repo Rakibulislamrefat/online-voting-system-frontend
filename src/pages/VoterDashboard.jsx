@@ -192,42 +192,106 @@ const VoterDashboard = () => {
                                         <div className="space-y-3">
                                             <p className="font-semibold text-gray-700 text-sm uppercase tracking-wider mb-3">Candidates</p>
                                             {election.candidates.map(candidate => (
-                                                <div key={candidate._id} className={`flex justify-between items-center p-3 rounded-lg border transition ${hasVoted ? 'bg-gray-50 opacity-70' : 'bg-white hover:border-green-400'}`}>
-                                                    <div className="flex items-center gap-4">
-                                                        {/* Candidate Avatar/Initial */}
-                                                        <div className={`w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold shadow-sm border ${hasVoted ? 'bg-gray-200 text-gray-500' : 'bg-white text-gray-700'}`}>
+                                                <div key={candidate._id} className={`group relative flex justify-between items-center p-5 rounded-2xl transition-all duration-500 overflow-hidden ${hasVoted ? 'bg-gradient-to-br from-gray-50 to-gray-100 opacity-70 border-2 border-gray-200' : 'bg-gradient-to-br from-white via-purple-50/30 to-pink-50/30 hover:from-purple-100/50 hover:to-pink-100/50 border-2 border-purple-200/50 hover:border-purple-400 shadow-lg hover:shadow-2xl hover:shadow-purple-300/30 transform hover:-translate-y-1'}`}>
+                                                    {/* Decorative background gradient */}
+                                                    {!hasVoted && (
+                                                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 pointer-events-none"></div>
+                                                    )}
+
+                                                    <div className="relative flex items-center gap-5">
+                                                        {/* Candidate Avatar/Initial - Enhanced */}
+                                                        <div className={`relative w-16 h-16 rounded-2xl flex items-center justify-center text-2xl font-black shadow-lg transition-all duration-300 ${hasVoted ? 'bg-gradient-to-br from-gray-200 to-gray-300 text-gray-500' : 'bg-gradient-to-br from-indigo-500 to-purple-600 text-white group-hover:scale-110 group-hover:rotate-3'}`}>
                                                             {candidate.name[0]}
+                                                            {!hasVoted && (
+                                                                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/30 to-transparent"></div>
+                                                            )}
                                                         </div>
 
-                                                        {/* Symbol Image */}
+                                                        {/* Symbol Image - Ultra Premium */}
                                                         {candidate.symbolImage && (
-                                                            <div className="w-14 h-14 rounded-lg bg-gray-50 border p-1 flex items-center justify-center shadow-sm">
-                                                                <img src={candidate.symbolImage} alt={candidate.symbol} className="max-w-full max-h-full object-contain" />
+                                                            <div className={`relative w-24 h-24 transition-all duration-500 ${hasVoted ? '' : 'group-hover:scale-110 group-hover:rotate-6'}`}>
+                                                                {/* Outer glow ring */}
+                                                                {!hasVoted && (
+                                                                    <div className="absolute -inset-2 bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 rounded-3xl opacity-75 blur-lg group-hover:opacity-100 animate-pulse"></div>
+                                                                )}
+
+                                                                {/* Main frame container */}
+                                                                <div className={`relative w-full h-full rounded-3xl p-0.5 transition-all duration-300 ${hasVoted ? 'bg-gray-300' : 'bg-gradient-to-br from-yellow-400 via-pink-500 to-purple-600'}`}>
+                                                                    {/* Inner white background */}
+                                                                    <div className={`relative w-full h-full rounded-3xl p-3 flex items-center justify-center overflow-hidden ${hasVoted ? 'bg-gray-100' : 'bg-white'}`}>
+                                                                        {/* Animated background pattern */}
+                                                                        {!hasVoted && (
+                                                                            <>
+                                                                                <div className="absolute inset-0 bg-gradient-to-br from-purple-100/50 via-pink-100/50 to-yellow-100/50"></div>
+                                                                                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.8),transparent_70%)]"></div>
+                                                                            </>
+                                                                        )}
+
+                                                                        {/* Symbol image */}
+                                                                        <img
+                                                                            src={candidate.symbolImage}
+                                                                            alt={candidate.symbol}
+                                                                            className={`relative z-10 max-w-full max-h-full object-contain transition-all duration-300 ${hasVoted ? 'opacity-60' : 'drop-shadow-2xl group-hover:scale-110'}`}
+                                                                        />
+
+                                                                        {/* Shine effect overlay */}
+                                                                        {!hasVoted && (
+                                                                            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                                                                        )}
+                                                                    </div>
+                                                                </div>
+
+                                                                {/* Corner accents */}
+                                                                {!hasVoted && (
+                                                                    <>
+                                                                        <div className="absolute -top-1 -left-1 w-3 h-3 bg-yellow-400 rounded-full shadow-lg shadow-yellow-400/50"></div>
+                                                                        <div className="absolute -top-1 -right-1 w-3 h-3 bg-pink-500 rounded-full shadow-lg shadow-pink-500/50"></div>
+                                                                        <div className="absolute -bottom-1 -left-1 w-3 h-3 bg-purple-600 rounded-full shadow-lg shadow-purple-600/50"></div>
+                                                                        <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-yellow-400 rounded-full shadow-lg shadow-yellow-400/50"></div>
+                                                                    </>
+                                                                )}
                                                             </div>
                                                         )}
 
-                                                        <div>
-                                                            <div className="font-bold text-gray-800 text-lg">{candidate.name}</div>
+                                                        <div className="flex-1">
+                                                            <div className="font-black text-xl text-gray-900 mb-1 tracking-tight">{candidate.name}</div>
                                                             {candidate.symbol && (
-                                                                <div className="text-sm text-gray-500 flex items-center gap-1 mt-0.5">
-                                                                    <span className="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded border">Symbol: {candidate.symbol}</span>
+                                                                <div className="flex items-center gap-2 mt-2">
+                                                                    <span className="bg-gradient-to-r from-purple-600 to-pink-600 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md">
+                                                                        {candidate.symbol}
+                                                                    </span>
+                                                                    <span className="text-purple-600 text-xs font-semibold">Official Symbol</span>
                                                                 </div>
                                                             )}
                                                         </div>
                                                     </div>
 
-                                                    <div className="flex items-center gap-2">
+                                                    <div className="relative flex items-center gap-3">
                                                         <button
                                                             onClick={() => !hasVoted && handleVote(election._id, candidate._id)}
                                                             disabled={hasVoted}
-                                                            className={`px-4 py-2 rounded-lg text-sm font-medium transition shadow-sm ${hasVoted
+                                                            className={`relative px-8 py-3 rounded-2xl text-sm font-bold transition-all duration-500 overflow-hidden group/btn ${hasVoted
                                                                 ? 'bg-gray-200 text-gray-500 cursor-not-allowed hidden'
-                                                                : 'bg-gradient-to-r from-green-600 to-green-500 text-white hover:shadow-md transform hover:-translate-y-0.5'
+                                                                : 'bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 text-white shadow-2xl hover:shadow-purple-500/50 transform hover:-translate-y-2 hover:scale-110 active:scale-95'
                                                                 }`}
                                                         >
-                                                            Vote
+                                                            {/* Animated gradient overlay */}
+                                                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000"></div>
+
+                                                            {/* Glassmorphism shine effect */}
+                                                            <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300"></div>
+
+                                                            {/* Button content */}
+                                                            <span className="relative flex items-center gap-2 font-extrabold tracking-wide">
+                                                                <span className="text-lg">🗳️</span>
+                                                                <span className="bg-gradient-to-r from-white to-yellow-100 bg-clip-text text-transparent">VOTE NOW</span>
+                                                                <span className="text-yellow-300">✨</span>
+                                                            </span>
+
+                                                            {/* Bottom glow */}
+                                                            <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-3/4 h-1 bg-gradient-to-r from-transparent via-pink-400 to-transparent blur-sm"></div>
                                                         </button>
-                                                        {hasVoted && <span className="text-green-600 font-bold text-sm">✓</span>}
+                                                        {hasVoted && <span className="text-green-600 font-bold text-2xl animate-bounce drop-shadow-lg">✓</span>}
                                                     </div>
                                                 </div>
                                             ))}
