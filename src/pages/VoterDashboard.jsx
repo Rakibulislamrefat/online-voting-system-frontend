@@ -108,13 +108,16 @@ const VoterDashboard = () => {
 
                 {/* Header Profile Section */}
                 <div className="bg-gradient-to-r from-green-700 to-green-900 rounded-2xl shadow-xl p-8 mb-8 text-white relative overflow-hidden">
-                    <div className="absolute top-0 right-0 opacity-10 transform translate-x-10 -translate-y-10">
-                        <svg className="w-64 h-64" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 2a8 8 0 100 16 8 8 0 000-16zM8 11a1 1 0 100-2 1 1 0 000 2zm3.707-4.707a1 1 0 00-1.414-1.414L9 6.172 7.707 4.879a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
+                    <div className="absolute top-0 right-0 transform translate-x-4 -translate-y-4">
+                        <img src="/bd_ballot_box.png" alt="National Election 2026" className="w-48 h-48 object-contain opacity-80 drop-shadow-lg" />
                     </div>
                     <div className="relative z-10 flex flex-col md:flex-row justify-between items-center">
                         <div>
                             <h1 className="text-3xl font-bold mb-2">Welcome, {user.name}</h1>
                             <p className="text-green-100 opacity-90">NID: {user.nid} | Email: {user.email}</p>
+                            <div className="mt-4 inline-block bg-white/20 backdrop-blur-md px-4 py-1 rounded-full text-xs font-semibold border border-white/20">
+                                🇧🇩 National Election 2026
+                            </div>
                         </div>
                         <div className="mt-6 md:mt-0 bg-white/20 backdrop-blur-sm px-6 py-3 rounded-xl border border-white/30">
                             <span className="block text-sm uppercase tracking-wider opacity-80">Your Constituency</span>
