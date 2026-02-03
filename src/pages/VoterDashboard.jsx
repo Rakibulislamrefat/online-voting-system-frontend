@@ -87,9 +87,22 @@ const VoterDashboard = () => {
                         </p>
                         <button
                             onClick={() => { localStorage.removeItem('userInfo'); window.location.href = '/login'; }}
-                            className="bg-yellow-500 text-white px-8 py-3 rounded-full font-bold hover:bg-yellow-600 transition shadow-lg"
+                            className="relative px-10 py-4 rounded-2xl text-base font-bold transition-all duration-500 overflow-hidden group bg-gradient-to-br from-yellow-500 via-orange-500 to-red-500 text-white shadow-2xl hover:shadow-yellow-500/50 transform hover:-translate-y-2 hover:scale-110 active:scale-95"
                         >
-                            Re-Login Now
+                            {/* Animated gradient overlay */}
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+
+                            {/* Glassmorphism shine effect */}
+                            <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+                            {/* Button content */}
+                            <span className="relative flex items-center gap-2 font-extrabold tracking-wide justify-center">
+                                <span className="text-xl">🔄</span>
+                                <span className="bg-gradient-to-r from-white to-yellow-100 bg-clip-text text-transparent">RE-LOGIN NOW</span>
+                            </span>
+
+                            {/* Bottom glow */}
+                            <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-3/4 h-1 bg-gradient-to-r from-transparent via-yellow-400 to-transparent blur-sm"></div>
                         </button>
                     </div>
                 </div>
@@ -298,8 +311,22 @@ const VoterDashboard = () => {
                                         </div>
                                     </div>
                                     <div className="bg-gray-50 p-4 border-t text-center">
-                                        <button onClick={() => navigate(`/election/${election._id}`)} className="text-brand-green font-bold text-sm hover:underline flex items-center justify-center gap-2 mx-auto">
-                                            <span>📊</span> View Live Analytics
+                                        <button
+                                            onClick={() => navigate(`/election/${election._id}`)}
+                                            className="relative px-6 py-3 rounded-xl text-sm font-bold transition-all duration-500 overflow-hidden group bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 text-white shadow-lg hover:shadow-2xl hover:shadow-emerald-500/50 transform hover:-translate-y-1 hover:scale-105 active:scale-95"
+                                        >
+                                            {/* Animated gradient overlay */}
+                                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+
+                                            {/* Glassmorphism shine */}
+                                            <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+                                            {/* Button content */}
+                                            <span className="relative flex items-center gap-2 font-extrabold tracking-wide">
+                                                <span className="text-base">📊</span>
+                                                <span>View Live Analytics</span>
+                                                <span className="text-yellow-300">→</span>
+                                            </span>
                                         </button>
                                     </div>
                                 </div>

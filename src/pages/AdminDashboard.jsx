@@ -134,7 +134,10 @@ const AdminDashboard = () => {
                     <div className="text-red-500 text-5xl mb-4">🚫</div>
                     <h2 className="text-2xl font-bold text-gray-800">Access Denied</h2>
                     <p className="text-gray-600 mt-2">You do not have permission to view this page.</p>
-                    <button onClick={() => window.location.href = '/'} className="mt-6 bg-gray-800 text-white px-6 py-2 rounded-full hover:bg-black transition">Go Home</button>
+                    <button onClick={() => window.location.href = '/'} className="relative mt-6 px-8 py-3 rounded-2xl text-sm font-bold transition-all duration-500 overflow-hidden group bg-gradient-to-r from-gray-700 to-gray-900 text-white shadow-xl hover:shadow-2xl hover:shadow-gray-700/50 transform hover:-translate-y-1 hover:scale-105 active:scale-95">
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                        <span className="relative font-extrabold">🏠 Go Home</span>
+                    </button>
                 </div>
             </div>
         )
@@ -203,9 +206,9 @@ const AdminDashboard = () => {
 
                     {/* Top Mobile Nav (visible only on small screens) */}
                     <div className="md:hidden mb-6 flex overflow-x-auto gap-2 pb-2">
-                        <button onClick={() => handleTabChange('create')} className={`whitespace-nowrap px-4 py-2 rounded-lg ${activeTab === 'create' ? 'bg-indigo-600 text-white' : 'bg-white shadow text-gray-700'}`}>Create Election</button>
-                        <button onClick={() => handleTabChange('elections')} className={`whitespace-nowrap px-4 py-2 rounded-lg ${activeTab === 'elections' ? 'bg-indigo-600 text-white' : 'bg-white shadow text-gray-700'}`}>Manage Elections</button>
-                        <button onClick={() => handleTabChange('voters')} className={`whitespace-nowrap px-4 py-2 rounded-lg ${activeTab === 'voters' ? 'bg-indigo-600 text-white' : 'bg-white shadow text-gray-700'}`}>Voters ({pendingCount})</button>
+                        <button onClick={() => handleTabChange('create')} className={`whitespace-nowrap px-5 py-2.5 rounded-xl font-bold transition-all duration-300 ${activeTab === 'create' ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg scale-105' : 'bg-white shadow text-gray-700 hover:shadow-md hover:scale-102'}`}>✨ Create Election</button>
+                        <button onClick={() => handleTabChange('elections')} className={`whitespace-nowrap px-5 py-2.5 rounded-xl font-bold transition-all duration-300 ${activeTab === 'elections' ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg scale-105' : 'bg-white shadow text-gray-700 hover:shadow-md hover:scale-102'}`}>🗳️ Manage Elections</button>
+                        <button onClick={() => handleTabChange('voters')} className={`whitespace-nowrap px-5 py-2.5 rounded-xl font-bold transition-all duration-300 ${activeTab === 'voters' ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg scale-105' : 'bg-white shadow text-gray-700 hover:shadow-md hover:scale-102'}`}>👥 Voters ({pendingCount})</button>
                     </div>
 
                     {/* Dynamic Content */}
@@ -254,7 +257,10 @@ const AdminDashboard = () => {
                                                 <div key={index} className="mb-4 bg-white p-4 rounded-lg border shadow-sm">
                                                     <div className="flex gap-4 mb-2">
                                                         <input type="text" placeholder="Candidate Name" className="flex-1 p-3 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 shadow-sm" value={candidate.name} onChange={(e) => handleCandidateChange(index, 'name', e.target.value)} required />
-                                                        {candidates.length > 1 && <button type="button" onClick={() => removeCandidate(index)} className="bg-red-100 text-red-500 px-4 rounded-lg hover:bg-red-200 transition font-bold">Remove</button>}
+                                                        {candidates.length > 1 && <button type="button" onClick={() => removeCandidate(index)} className="relative px-4 py-2 rounded-lg font-bold transition-all duration-300 overflow-hidden group bg-gradient-to-r from-red-500 to-pink-500 text-white shadow-md hover:shadow-lg hover:scale-105 active:scale-95">
+                                                            <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                                                            <span className="relative">🗑️ Remove</span>
+                                                        </button>}
                                                     </div>
                                                     <div className="flex gap-4">
                                                         <input type="text" placeholder="Symbol Name (e.g. Boat)" className="flex-1 p-3 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 shadow-sm" value={candidate.symbol} onChange={(e) => handleCandidateChange(index, 'symbol', e.target.value)} />
@@ -262,13 +268,28 @@ const AdminDashboard = () => {
                                                     </div>
                                                 </div>
                                             ))}
-                                            <button type="button" onClick={addCandidate} className="mt-2 text-indigo-600 font-bold flex items-center gap-2 hover:bg-indigo-50 px-4 py-2 rounded-lg transition">+ Add Another Candidate</button>
+                                            <button type="button" onClick={addCandidate} className="relative mt-2 px-5 py-3 rounded-xl font-bold transition-all duration-500 overflow-hidden group bg-gradient-to-r from-indigo-100 to-purple-100 text-indigo-700 border-2 border-indigo-300 hover:border-indigo-500 shadow-sm hover:shadow-md transform hover:scale-105">
+                                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                                                <span className="relative flex items-center gap-2">➕ Add Another Candidate</span>
+                                            </button>
                                         </div>
                                     )}
 
                                     <div className="pt-6 border-t flex gap-4">
-                                        {editId && <button type="button" onClick={() => { setEditId(null); setTitle(''); setDescription(''); setConstituencies(''); setCandidates([]); }} className="flex-1 bg-gray-200 text-gray-700 py-4 rounded-xl font-bold hover:bg-gray-300 transition">Cancel Editing</button>}
-                                        <button type="submit" className="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-4 rounded-xl font-bold hover:shadow-lg transition transform hover:-translate-y-1">{editId ? 'Update Election Details' : '🚀 Publish Election'}</button>
+                                        {editId && <button type="button" onClick={() => { setEditId(null); setTitle(''); setDescription(''); setConstituencies(''); setCandidates([]); }} className="relative flex-1 py-4 rounded-xl font-bold transition-all duration-300 overflow-hidden group bg-gradient-to-r from-gray-300 to-gray-400 text-gray-700 shadow-md hover:shadow-lg transform hover:scale-105">
+                                            <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                                            <span className="relative">❌ Cancel Editing</span>
+                                        </button>}
+                                        <button type="submit" className="relative flex-1 py-4 rounded-2xl font-bold transition-all duration-500 overflow-hidden group bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 text-white shadow-2xl hover:shadow-purple-500/50 transform hover:-translate-y-2 hover:scale-105 active:scale-95">
+                                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                                            <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                            <span className="relative flex items-center gap-2 font-extrabold justify-center">
+                                                <span className="text-xl">{editId ? '💾' : '🚀'}</span>
+                                                <span className="bg-gradient-to-r from-white to-yellow-100 bg-clip-text text-transparent">{editId ? 'UPDATE ELECTION' : 'PUBLISH ELECTION'}</span>
+                                                <span className="text-yellow-300">✨</span>
+                                            </span>
+                                            <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-3/4 h-1 bg-gradient-to-r from-transparent via-pink-400 to-transparent blur-sm"></div>
+                                        </button>
                                     </div>
                                 </form>
                             </div>
@@ -288,7 +309,12 @@ const AdminDashboard = () => {
                                                     <td className="py-4 px-6 font-medium text-gray-800">{voter.name}</td>
                                                     <td className="py-4 px-6">{voter.nid}</td>
                                                     <td className="py-4 px-6">{voter.constituency}</td>
-                                                    <td className="py-4 px-6 text-center"><button onClick={() => approveVoter(voter._id)} className="bg-green-500 text-white py-2 px-4 rounded-lg shadow hover:bg-green-600 hover:shadow-md transition text-xs font-bold uppercase tracking-wide">✓ Approve</button></td>
+                                                    <td className="py-4 px-6 text-center">
+                                                        <button onClick={() => approveVoter(voter._id)} className="relative px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wide transition-all duration-500 overflow-hidden group bg-gradient-to-r from-green-600 to-emerald-600 text-white shadow-lg hover:shadow-xl hover:shadow-green-500/50 transform hover:scale-110 active:scale-95">
+                                                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                                                            <span className="relative">✓ Approve</span>
+                                                        </button>
+                                                    </td>
                                                 </tr>
                                             ))}
                                             {pendingVoters.length === 0 && <tr><td colSpan="4" className="text-center py-8 text-gray-400 italic">No pending voter applications</td></tr>}
@@ -335,7 +361,10 @@ const AdminDashboard = () => {
                                                     </span>
                                                     <h3 className="text-xl font-bold text-gray-800">{election.title}</h3>
                                                 </div>
-                                                <button onClick={() => handleEdit(election)} className="text-gray-400 hover:text-blue-600 bg-gray-50 hover:bg-blue-50 p-2 rounded-lg transition" title="Edit Election">✏️</button>
+                                                <button onClick={() => handleEdit(election)} className="relative p-3 rounded-xl transition-all duration-300 overflow-hidden group bg-gradient-to-br from-blue-100 to-indigo-100 text-blue-600 hover:text-blue-700 shadow-sm hover:shadow-md transform hover:scale-110 active:scale-95" title="Edit Election">
+                                                    <div className="absolute inset-0 bg-white/30 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                                                    <span className="relative text-lg">✏️</span>
+                                                </button>
                                             </div>
 
                                             <p className="text-gray-600 text-sm mb-6 line-clamp-2 h-10">{election.description}</p>
@@ -356,13 +385,19 @@ const AdminDashboard = () => {
 
                                             <div className="flex gap-3 relative z-10">
                                                 {election.phase === 'scheduled' && (
-                                                    <button onClick={() => updateStatus(election._id, 'ongoing')} className="flex-1 bg-green-600 text-white px-4 py-3 rounded-xl text-sm font-bold hover:bg-green-700 hover:shadow-lg transition">Start Election Now</button>
+                                                    <button onClick={() => updateStatus(election._id, 'ongoing')} className="relative flex-1 px-4 py-3 rounded-xl text-sm font-bold transition-all duration-500 overflow-hidden group bg-gradient-to-r from-green-600 to-emerald-600 text-white shadow-lg hover:shadow-2xl hover:shadow-green-500/50 transform hover:-translate-y-1 hover:scale-105 active:scale-95">
+                                                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                                                        <span className="relative flex items-center gap-2 justify-center"><span>▶️</span> Start Election Now</span>
+                                                    </button>
                                                 )}
                                                 {election.phase === 'ongoing' && (
-                                                    <button onClick={() => updateStatus(election._id, 'ended')} className="flex-1 bg-red-500 text-white px-4 py-3 rounded-xl text-sm font-bold hover:bg-red-600 hover:shadow-lg transition">Stop Election</button>
+                                                    <button onClick={() => updateStatus(election._id, 'ended')} className="relative flex-1 px-4 py-3 rounded-xl text-sm font-bold transition-all duration-500 overflow-hidden group bg-gradient-to-r from-red-600 to-pink-600 text-white shadow-lg hover:shadow-2xl hover:shadow-red-500/50 transform hover:-translate-y-1 hover:scale-105 active:scale-95">
+                                                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                                                        <span className="relative flex items-center gap-2 justify-center"><span>⏹️</span> Stop Election</span>
+                                                    </button>
                                                 )}
                                                 {election.phase === 'ended' && (
-                                                    <button className="flex-1 bg-gray-100 text-gray-400 px-4 py-3 rounded-xl text-sm font-bold cursor-not-allowed">Archived</button>
+                                                    <button className="flex-1 bg-gradient-to-r from-gray-200 to-gray-300 text-gray-500 px-4 py-3 rounded-xl text-sm font-bold cursor-not-allowed shadow-inner">📦 Archived</button>
                                                 )}
                                             </div>
                                         </div>
