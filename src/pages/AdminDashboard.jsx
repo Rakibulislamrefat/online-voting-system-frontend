@@ -172,16 +172,54 @@ const AdminDashboard = () => {
                             </div>
                         </div>
 
-                        <nav className="space-y-2">
-                            <button onClick={() => handleTabChange('create')} className={`w-full text-left px-4 py-3 rounded-xl transition flex items-center gap-3 ${activeTab === 'create' ? 'bg-indigo-600 text-white shadow-md' : 'text-gray-600 hover:bg-gray-50 active:bg-gray-100'}`}>
-                                <span>➕</span> Create Election
+                        <nav className="space-y-3">
+                            <button
+                                onClick={() => handleTabChange('create')}
+                                className={`relative w-full text-left px-5 py-4 rounded-2xl transition-all duration-500 flex items-center gap-3 font-bold overflow-hidden group ${activeTab === 'create' ? 'bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 text-white shadow-xl shadow-indigo-500/30 scale-105' : 'text-gray-600 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50 hover:shadow-md hover:scale-102 active:scale-100'}`}
+                            >
+                                {activeTab === 'create' && (
+                                    <>
+                                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                                        <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent"></div>
+                                    </>
+                                )}
+                                <span className="relative text-xl">✨</span>
+                                <span className="relative">Create Election</span>
                             </button>
-                            <button onClick={() => handleTabChange('elections')} className={`w-full text-left px-4 py-3 rounded-xl transition flex items-center gap-3 ${activeTab === 'elections' ? 'bg-indigo-600 text-white shadow-md' : 'text-gray-600 hover:bg-gray-50 active:bg-gray-100'}`}>
-                                <span>🗳️</span> Manage Elections
+
+                            <button
+                                onClick={() => handleTabChange('elections')}
+                                className={`relative w-full text-left px-5 py-4 rounded-2xl transition-all duration-500 flex items-center gap-3 font-bold overflow-hidden group ${activeTab === 'elections' ? 'bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 text-white shadow-xl shadow-indigo-500/30 scale-105' : 'text-gray-600 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50 hover:shadow-md hover:scale-102 active:scale-100'}`}
+                            >
+                                {activeTab === 'elections' && (
+                                    <>
+                                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                                        <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent"></div>
+                                    </>
+                                )}
+                                <span className="relative text-xl">🗳️</span>
+                                <span className="relative">Manage Elections</span>
                             </button>
-                            <button onClick={() => handleTabChange('voters')} className={`w-full text-left px-4 py-3 rounded-xl transition flex items-center justify-between ${activeTab === 'voters' ? 'bg-indigo-600 text-white shadow-md' : 'text-gray-600 hover:bg-gray-50 active:bg-gray-100'}`}>
-                                <div className="flex items-center gap-3"><span>👥</span> Manage Voters</div>
-                                {pendingCount > 0 && <span className="bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">{pendingCount}</span>}
+
+                            <button
+                                onClick={() => handleTabChange('voters')}
+                                className={`relative w-full text-left px-5 py-4 rounded-2xl transition-all duration-500 flex items-center justify-between font-bold overflow-hidden group ${activeTab === 'voters' ? 'bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 text-white shadow-xl shadow-indigo-500/30 scale-105' : 'text-gray-600 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50 hover:shadow-md hover:scale-102 active:scale-100'}`}
+                            >
+                                {activeTab === 'voters' && (
+                                    <>
+                                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                                        <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent"></div>
+                                    </>
+                                )}
+                                <div className="relative flex items-center gap-3">
+                                    <span className="text-xl">👥</span>
+                                    <span>Manage Voters</span>
+                                </div>
+                                {pendingCount > 0 && (
+                                    <span className={`relative px-2.5 py-1 rounded-full text-xs font-extrabold shadow-lg animate-pulse ${activeTab === 'voters' ? 'bg-yellow-400 text-yellow-900' : 'bg-red-500 text-white'}`}>
+                                        {pendingCount}
+                                    </span>
+                                )}
                             </button>
                         </nav>
 
